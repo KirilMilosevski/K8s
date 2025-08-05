@@ -6,7 +6,7 @@ metadata:
   labels:
     app: student-api
 ---
-apiVersion: external-secrets.io/v1beta1
+apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   name: app-secret
@@ -43,9 +43,11 @@ spec:
       labels:
         app: student-api
     spec:
+      imagePullSecrets:
+        - name: dockerhub-secret
       containers:
-        - name: app
-          image: student-api:latest
+        - name: student-api
+          image: kiril011/student-api:latest
           ports:
             - containerPort: 3000
           env:
@@ -65,15 +67,6 @@ spec:
                 secretKeyRef:
                   name: app-credentials
                   key: DB_PASSWORD
-      initContainers:
-        - name: init-migrate
-          image: student-api:latest
-          command: ["npm", "run", "migrate"]
-          envFrom:
-            - configMapRef:
-                name: app-config
-            - secretRef:
-                name: app-credentials
 ---
 apiVersion: v1
 kind: Service
