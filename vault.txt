@@ -1,0 +1,8 @@
+kubectl port-forward -n vault svc/vault 8200:8200 >/dev/null 2>&1 &
+
+Then set the address:
+
+export VAULT_ADDR=http://127.0.0.1:8200
+
+vault kv put secret/student-api DB_USER=youruser DB_PASSWORD=yourpassword
+

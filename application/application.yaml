@@ -21,12 +21,12 @@ spec:
   data:
     - secretKey: DB_USER
       remoteRef:
-        key: student-api/db
-        property: username
-    - secretKey: DB_PASSWORD
+        key: student-api
+        property: DB_USER
+    - secretKey: DB_PASS
       remoteRef:
-        key: student-api/db
-        property: password
+        key: student-api
+        property: DB_PASS
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -62,11 +62,11 @@ spec:
                 secretKeyRef:
                   name: app-credentials
                   key: DB_USER
-            - name: DB_PASSWORD
+            - name: DB_PASS
               valueFrom:
                 secretKeyRef:
                   name: app-credentials
-                  key: DB_PASSWORD
+                  key: DB_PASS
 ---
 apiVersion: v1
 kind: Service
